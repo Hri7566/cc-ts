@@ -1,0 +1,27 @@
+{
+  "name": "@rbxts/cc-ts",
+  "version": "1.0.0",
+  "main": "out/init.lua",
+  "license": "MIT",
+  "scripts": {
+    "build": "rbxtsc",
+    "watch": "rbxtsc -w",
+    "prepublishOnly": "yarn run build",
+    "bundle": "yarn run build && node bundle.js"
+  },
+  "types": "out/index.d.ts",
+  "files": [
+    "out",
+    "!**/*.tsbuildinfo"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "devDependencies": {
+    "@rbxts/compiler-types": "^2.1.0-types.1",
+    "@rbxts/types": "^1.0.678",
+    "luabundle": "^1.6.0",
+    "prettier": "^2.8.8",
+    "typescript": "^5.0.4"
+  }
+}
