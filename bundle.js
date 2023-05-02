@@ -7,7 +7,7 @@ const package = require('./package.json');
 
 const lua = bundle('./out/init.lua', {
     luaVersion: 'LuaJIT',
-    paths: ['out/?.lua'],
+    paths: ['out/?.lua', 'out/?/init.lua'],
     preprocess: (module, options) => {
         // redneck code
         let code = module.content;
