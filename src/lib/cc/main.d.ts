@@ -52,6 +52,8 @@ declare class Colours {
 
 export const colours: Colours;
 
+export declare type BlockInfo = any;
+
 declare class Commands {
 	public exec(command: string): [boolean, string[], number | undefined];
 	public execAsync(command: string): number;
@@ -65,8 +67,8 @@ declare class Commands {
 		maxY: number,
 		maxZ: number,
 		dimension?: string
-	): object[];
-	public getBlockInfo(x: number, y: number, z: number, dimension?: string): object;
+	): BlockInfo[];
+	public getBlockInfo(x: number, y: number, z: number, dimension?: string): BlockInfo;
 	public native: Commands;
 	public async: Commands;
 }
@@ -89,6 +91,28 @@ declare class Disk {
 
 export const disk: Disk;
 
+export interface ReadHandle {
+	read(count?: number): string | number | undefined;
+	readAll(): string | undefined;
+	readLine(withTrailing?: boolean): string | undefined;
+	close(): void;
+}
+
+export interface BinaryReadHandle extends ReadHandle {
+	seek(whence?: "set" | "cur" | "end", offset?: number): number | [undefined, string];
+}
+
+export interface WriteHandle {
+	write(value: any): void;
+	writeLine(value: any): void;
+	flush(): void;
+	close(): void;
+}
+
+export interface BinaryWriteHandle extends Omit<WriteHandle, "writeLine"> {
+	seek(whence?: "set" | "cur" | "end", offset?: number): number | [undefined, string];
+}
+
 declare class Fs {
 	public complete(path: string, location: string, include_files?: boolean, include_dirs?: boolean): string[];
 	public complete(
@@ -106,7 +130,10 @@ declare class Fs {
 	public isDir(path: string): boolean;
 	public isReadOnly(path: string): boolean;
 	public move(path: string, dest: string): void;
-	public open(path: string, mode: string): object | [undefined, string | undefined];
+	public open(path: string, mode: "r"): ReadHandle | [undefined, string | undefined];
+	public open(path: string, mode: "w" | "a"): WriteHandle | [undefined, string | undefined];
+	public open(path: string, mode: "rb"): BinaryReadHandle | [undefined, string | undefined];
+	public open(path: string, mode: "wb" | "ab"): BinaryWriteHandle | [undefined, string | undefined];
 	public getDrive(path: string): string | undefined;
 	public getFreeSpace(path: string): number | "unlimited";
 	public find(path: string): string[];
@@ -133,27 +160,42 @@ declare class Help {
 	public path(): string;
 	public setPath(newPath: string): void;
 	public lookup(topic: string): string | undefined;
-	public topics(): object;
-	public completeTopic(prefix: string): object;
+	public topics(): string[];
+	public completeTopic(prefix: string): string[];
 }
 
 export const help: Help;
 
+declare interface Websocket {
+	receive(timeout?: number): [string, boolean];
+	send(message: string, binary?: boolean): void;
+	close(): void;
+}
+
+declare interface Response {
+	getResponseCode(): [number, string];
+	getResponseHeaders(): Record<string, string>;
+}
+
 declare class HTTP {
-	public get(url: string, headers?: Record<string, string>, binary?: boolean): object;
+	public get(
+		url: string,
+		headers?: Record<string, string>,
+		binary?: boolean
+	): Response | [undefined, string, Response | undefined];
 	public get(request: {
 		url: string;
 		headers?: Record<string, string>;
 		binary?: boolean;
 		method?: string;
 		redirect?: boolean;
-	}): object;
+	}): Response | [undefined, string, Response | undefined];
 	public post(
 		url: string,
 		body: string,
 		headers?: Record<string, string>,
 		binary?: boolean
-	): object | [undefined, string, object | undefined];
+	): Response | [undefined, string, Response | undefined];
 	public post(request: {
 		url: string;
 		body?: string;
@@ -161,7 +203,7 @@ declare class HTTP {
 		binary?: boolean;
 		method?: string;
 		redirect: boolean;
-	}): object | [undefined, string, object | undefined];
+	}): Response | [undefined, string, Response | undefined];
 	public request(url: string, body?: string, headers?: Record<string, string>, binary?: boolean): void;
 	public request(request: {
 		url: string;
@@ -174,30 +216,40 @@ declare class HTTP {
 	public checkURLAsync(url: string): true | [false, string];
 	public checkURL(url: string): true | [false, string];
 	public websocketAsync(url: string, headers?: Record<string, string>): void;
-	public websocket(url: string, headers?: Record<string, string>): object | [false, string];
+	public websocket(url: string, headers?: Record<string, string>): Websocket | [false, string];
 }
 
 export const http: HTTP;
 
+declare interface Handle {
+	close(): boolean | [undefined, string];
+	flush(): void;
+	lines(...args: any[]): () => string | undefined;
+	read(...args: ("l" | "L" | "a" | "n")[]): string | undefined;
+	seek(whence?: string, offset?: number): number;
+	write(...args: (string | number)[]): Handle | [undefined, string];
+}
+
 declare class IO {
-	public stdin: object;
-	public stdout: object;
-	public stderr: object;
-	public close(file?: object): void;
+	public stdin: Handle;
+	public stdout: Handle;
+	public stderr: Handle;
+	public close(file?: Handle): void;
 	public flush(): void;
-	public input(file?: object | string): object;
-	public lines(filename?: string, ...args: unknown[]): string | undefined;
-	public open(filename: string, mode?: "r" | "w" | "a"): object;
-	public output(file?: object | string): object;
+	public input(file?: Handle | string): Handle;
+	public lines(filename?: string, ...args: any[]): string | undefined;
+	public open(filename: string, mode?: "r" | "w" | "a"): Handle;
+	public output(file?: Handle | string): Handle;
 	public read(...args: string[]): string | undefined;
-	public type(obj: object): "file" | "closed file" | undefined;
+	public type(obj: Handle): "file" | "closed file" | undefined;
 	public write(...args: string[]): void;
 }
 
 export const io: IO;
 
-declare class Keys {
-	public getName(code: number): string;
+declare interface Keys {
+	[key: string]: number | ((code: number) => string);
+	getName(code: number): string;
 }
 
 export const keys: Keys;
@@ -517,3 +569,17 @@ declare class Window {
 }
 
 export const window: Window;
+
+export function sleep(time: number): void;
+export function write(text: string): void;
+export function print(...args: any[]): void;
+export function printError(...args: any[]): void;
+export function read(
+	replaceChar?: string,
+	history?: object,
+	completeFn?: (partial: string) => string[] | undefined,
+	def?: string
+): string;
+
+export const _HOST: string;
+export const _CC_DEFAULT_SETTINGS: string;

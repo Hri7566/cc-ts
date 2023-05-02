@@ -1,3 +1,5 @@
-import { settings } from "./cc";
+import { print, _HOST, term, colors } from "./lib/cc/main";
 
-print(settings.getNames());
+term.clear();
+term.setTextColor(colors.white);
+term.write(`${_HOST}\n`);

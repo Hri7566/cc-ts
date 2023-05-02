@@ -1,16 +1,20 @@
+function makeSelfFunction(v)
+    return function(self, ...)
+        return v(...)
+    end
+end
+
 function fillTranslationTable(existing, new)
     if existing == nil then return end
     for i,v in pairs(existing) do
         if type(v) == "function" then
-            new[i] = function(self, ...)
-                return v(...)
-            end
+            new[i] = makeSelfFunction(v)
         end
     end
 end
 
-local Colors = {}
-local Colours = {}
+-- local Colors = {}
+-- local Colours = {}
 local Commands = {}
 local Disk = {}
 local Fs = {}
@@ -35,8 +39,17 @@ local Turtle = {}
 local Vector = {}
 local Window = {}
 
-fillTranslationTable(colors, Colors)
-fillTranslationTable(colours, Colours)
+local Sleep = sleep
+local Write = write
+local Print = print
+local PrintError = printError
+local Read = read
+
+local Host = _HOST
+local CCDefaultSettings = _CC_DEFAULT_SETTINGS
+
+-- fillTranslationTable(colors, Colors)
+-- fillTranslationTable(colours, Colours)
 fillTranslationTable(commands, Commands)
 fillTranslationTable(disk, Disk)
 fillTranslationTable(fs, Fs)
@@ -62,8 +75,10 @@ fillTranslationTable(vector, Vector)
 fillTranslationTable(window, Window)
 
 return {
-    colors = Colors,
-    colours = Colours,
+    -- colors = Colors,
+    -- colours = Colours,
+    colors = colors,
+    colours = colours,
     commands = Commands,
     disk = Disk,
     fs = Fs,
@@ -87,5 +102,12 @@ return {
     textutils = TextUtils,
     turtle = Turtle,
     vector = Vector,
-    window = Window
+    window = Window,
+    sleep = Sleep,
+    write = Write,
+    print = Print,
+    printError = PrintError,
+    read = Read,
+    _HOST = Host,
+    _CC_DEFAULT_SETTINGS = CCDefaultSettings
 }

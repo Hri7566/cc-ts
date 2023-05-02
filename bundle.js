@@ -1,4 +1,5 @@
 const bundleName = "cc-ts";
+const bundleDir = "dist";
 
 const { bundle } = require('luabundle');
 const { writeFileSync, mkdirSync } = require('fs');
@@ -8,15 +9,18 @@ const lua = bundle('./out/init.lua', {
     luaVersion: 'LuaJIT',
     paths: ['out/?.lua'],
     preprocess: (module, options) => {
+        // redneck code
         let code = module.content;
-        const regex = /TS\.import\(.*,.*,/g;
-        let c = code.replace(regex, `require(`);
-        return c;
+        return code.split(/TS.import\(script, script.Parent, /g).join("require(").split(/\", \"/g).join("/")
+        // const regex = /TS\.import\(script, script.Parent,/g;
+        // console.log(code.match(regex));
+        // let c = code.replace(regex, `require(`);
+        // return c;
     }
 });
 
-mkdirSync("dist", {
+mkdirSync(bundleDir, {
     recursive: true
 });
 
-writeFileSync(`dist/${bundleName}.bundle.lua`, lua);
+writeFileSync(`${bundleDir}/${bundleName}.bundle.lua`, lua);
