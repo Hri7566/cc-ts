@@ -1,7 +1,3 @@
-import { TextUtils } from "./cc";
-import { EventEmitter } from "./EventEmitter";
+import { settings } from "./cc";
 
-const evt = new EventEmitter();
-
-evt.on("print", print);
-evt.emit("print", "hello");
+print(settings.getNames());
