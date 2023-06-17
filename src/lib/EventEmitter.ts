@@ -1,6 +1,6 @@
 type MaybePromise<T> = Promise<T> | T;
-type EventArguments = unknown[];
-type EventCallback = (...args: EventArguments) => MaybePromise<void>;
+export type EventArguments = unknown[];
+export type EventCallback = (...args: EventArguments) => MaybePromise<void>;
 
 interface Event {
 	once: boolean;
