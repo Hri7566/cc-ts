@@ -6,7 +6,7 @@ end
 
 function fillTranslationTable(existing, new)
     if existing == nil then return end
-    for i,v in pairs(existing) do
+    for i, v in pairs(existing) do
         if type(v) == "function" then
             new[i] = makeSelfFunction(v)
         end
@@ -35,7 +35,10 @@ local Settings = {}
 local Shell = {}
 local Term = {}
 local TextUtils = {}
-local Turtle = {}
+local Turtle
+if turtle then
+    Turtle = {}
+end
 local Vector = {}
 local Window = {}
 
@@ -70,7 +73,9 @@ fillTranslationTable(settings, Settings)
 fillTranslationTable(shell, Shell)
 fillTranslationTable(term, Term)
 fillTranslationTable(textutils, TextUtils)
-fillTranslationTable(turtle, Turtle)
+if turtle then
+    fillTranslationTable(turtle, Turtle)
+end
 fillTranslationTable(vector, Vector)
 fillTranslationTable(window, Window)
 
@@ -109,5 +114,6 @@ return {
     printError = PrintError,
     read = Read,
     _HOST = Host,
-    _CC_DEFAULT_SETTINGS = CCDefaultSettings
+    _CC_DEFAULT_SETTINGS = CCDefaultSettings,
+    load = load
 }

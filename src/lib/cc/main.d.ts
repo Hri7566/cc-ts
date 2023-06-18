@@ -167,9 +167,9 @@ declare class Help {
 export const help: Help;
 
 declare interface Websocket {
-	receive(timeout?: number): LuaTuple<[string, boolean]>;
-	send(message: string, binary?: boolean): void;
-	close(): void;
+	receive: (timeout?: number) => LuaTuple<[string, boolean]>;
+	send: (message: string, binary?: boolean) => void;
+	close: () => void;
 }
 
 declare interface Response {
@@ -216,7 +216,7 @@ declare class HTTP {
 	public checkURLAsync(url: string): true | [false, string];
 	public checkURL(url: string): true | [false, string];
 	public websocketAsync(url: string, headers?: Record<string, string>): void;
-	public websocket(url: string, headers?: Record<string, string>): Websocket | [false, string];
+	public websocket(url: string, headers?: Record<string, string>): LuaTuple<[Websocket | false, undefined | string]>;
 }
 
 export const http: HTTP;
@@ -277,8 +277,8 @@ declare class OS {
 	public cancelAlarm(token: number): void;
 	public shutdown(): void;
 	public reboot(): void;
-	public getComputerID(): number | undefined;
-	public computerID(): number | undefined;
+	public getComputerID(): number;
+	public computerID(): number;
 	public getComputerLabel(): string | undefined;
 	public computerLabel(): string | undefined;
 	public setComputerLabel(label?: string): void;
@@ -313,12 +313,12 @@ export const parallel: Parallel;
 declare class Peripheral {
 	public getNames(): string[];
 	public isPresent(name: string): boolean;
-	public getType(peripheral: string | object): string | undefined;
-	public hasType(peripheral: string | object, peripheral_type: string): boolean | undefined;
+	public getType(peripheral: string | any): string | undefined;
+	public hasType(peripheral: string | any, peripheral_type: string): boolean | undefined;
 	public getMethods(name: string): string[];
-	public getName(peripheral: string | object): string;
+	public getName(peripheral: string | any): string;
 	public call(name: string, method: string, ...args: any[]): any;
-	public wrap(name: string): object | undefined;
+	public wrap(name: string): any | undefined;
 	public find(ty: string, filter?: (name: string, wrapped: object) => boolean): object;
 }
 
@@ -514,9 +514,10 @@ declare class Turtle {
 	public inspectUp(): LuaTuple<[boolean, object | string]>;
 	public inspectDown(): LuaTuple<[boolean, object | string]>;
 	public getItemDetail(slot?: number, detailed?: boolean): object | undefined;
+	public native: Turtle;
 }
 
-export const turtle: Turtle;
+export const turtle: Turtle | undefined;
 
 declare class vector {
 	constructor(x: number, y: number, z: number);
@@ -580,6 +581,8 @@ export function read(
 	completeFn?: (partial: string) => string[] | undefined,
 	def?: string
 ): string;
+
+export function load(str: string): (...args: unknown[]) => unknown;
 
 export const _HOST: string;
 export const _CC_DEFAULT_SETTINGS: string;
