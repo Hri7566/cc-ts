@@ -10,7 +10,7 @@ const path = require("path");
 // require("lib.cc.main")
 
 function resolveModule(currentPath, args) {
-	let pathArgs = args.slice(1).map((el) => {
+	let pathArgs = args.map((el) => {
 		let p = el.split(".");
 		p = p
 			.map((e) => {
@@ -21,6 +21,7 @@ function resolveModule(currentPath, args) {
 			.join("/");
 
 		if (p.startsWith("./")) p = p.substring("./".length);
+
 		if (p.match(/\".*\"/)) {
 			return p.substring(1, p.length - 1);
 		} else {
@@ -28,7 +29,16 @@ function resolveModule(currentPath, args) {
 		}
 	});
 
-	return path.join(currentPath, "out", pathArgs.join("/")).replace("out/", "").split("/").join(".");
+	// console.log("prejoin:", pathArgs);
+	// console.log("postjoin:", path.join(currentPath, "out", pathArgs.join("/")));
+
+	// const out = path.join(currentPath, "out", pathArgs.join("/")).replace("out/", "").split("/").join(".");
+	// console.log("from " + currentPath + ":", out);
+	// return out;
+
+	const out = path.join(currentPath, ...pathArgs);
+	console.log(out);
+	return out;
 }
 
 const lua = bundle("./out/init.lua", {
@@ -50,8 +60,8 @@ const lua = bundle("./out/init.lua", {
 		if (module.resolvedPath) {
 			code = code.replace(/TS.import\(script\, script.*\, ".*"\)/g, (el) => {
 				console.log(`\x1b[35m${el}\x1b[0m`);
-				const args = el.substring("TS.import(".length, el.length - 1).split(", ");
-				// console.log(args);
+				const args = el.substring("TS.import(script, ".length, el.length - 1).split(", ");
+				console.log(args);
 				let newPath = resolveModule(path.parse(module.resolvedPath).dir, args);
 				return `require("${newPath}")`;
 			});

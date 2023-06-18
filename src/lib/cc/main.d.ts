@@ -55,10 +55,10 @@ export const colours: Colours;
 export declare type BlockInfo = any;
 
 declare class Commands {
-	public exec(command: string): [boolean, string[], number | undefined];
+	public exec(command: string): LuaTuple<[boolean, string[], number | undefined]>;
 	public execAsync(command: string): number;
 	public list(...args: string[]): string[];
-	public getBlockPosition(): [number, number, number];
+	public getBlockPosition(): LuaTuple<[number, number, number]>;
 	public getBlockInfos(
 		minX: number,
 		minY: number,
@@ -151,7 +151,7 @@ export const fs: Fs;
 
 declare class GPS {
 	public CHANNEL_GPS: number;
-	public locate(timeout?: number, debug?: boolean): [number, number, number];
+	public locate(timeout?: number, debug?: boolean): LuaTuple<[number, number, number]>;
 }
 
 export const gps: GPS;
@@ -167,13 +167,13 @@ declare class Help {
 export const help: Help;
 
 declare interface Websocket {
-	receive(timeout?: number): [string, boolean];
+	receive(timeout?: number): LuaTuple<[string, boolean]>;
 	send(message: string, binary?: boolean): void;
 	close(): void;
 }
 
 declare interface Response {
-	getResponseCode(): [number, string];
+	getResponseCode(): LuaTuple<[number, string]>;
 	getResponseHeaders(): Record<string, string>;
 }
 
@@ -267,8 +267,8 @@ declare class Multishell {
 export const multishell: Multishell;
 
 declare class OS {
-	public pullEvent(filter?: string): [string, ...any];
-	public pullEventRaw(filter?: string): [string, ...any];
+	public pullEvent(filter?: string): LuaTuple<[string, ...any]>;
+	public pullEventRaw(filter?: string): LuaTuple<[string, ...any]>;
 	public run(env: object, path: string, ...args: any[]): boolean;
 	public queueEvent(name: string, ...args: any[]): void;
 	public startTimer(timer: number): number;
@@ -325,8 +325,8 @@ declare class Peripheral {
 export const peripheral: Peripheral;
 
 declare class Pocket {
-	public equipBack(): [boolean, string | undefined];
-	public unequipBack(): [boolean, string | undefined];
+	public equipBack(): LuaTuple<[boolean, string | undefined]>;
+	public unequipBack(): LuaTuple<[boolean, string | undefined]>;
 }
 
 export const pocket: Pocket;
@@ -340,7 +340,7 @@ declare class Rednet {
 	public isOpen(modem: string): boolean;
 	public send(recipient: number, message: object, protocol?: string): boolean;
 	public broadcast(message: string, protocol?: string): void;
-	public receive(protocol_filter?: string, timeout?: number): [number, object, string | undefined];
+	public receive(protocol_filter?: string, timeout?: number): LuaTuple<[number, object, string | undefined]>;
 	public host(protocol: string, hostname: string): void;
 	public unhost(protocol: string): void;
 	public lookup(protocol: string, hostname?: string): number[] | number | undefined;
@@ -413,15 +413,15 @@ declare class Shell {
 export const shell: Shell;
 
 declare class Term {
-	public nativePaletteColour(colour: number): [number, number, number];
-	public nativePaletteColor(colour: number): [number, number, number];
+	public nativePaletteColour(colour: number): LuaTuple<[number, number, number]>;
+	public nativePaletteColor(colour: number): LuaTuple<[number, number, number]>;
 	public write(text: string): void;
 	public scroll(y: number): void;
-	public getCursorPos(): [number, number];
+	public getCursorPos(): LuaTuple<[number, number]>;
 	public setCursorPos(x: number, y: number): void;
 	public getCursorBlink(): boolean;
 	public setCursorBlink(blink: boolean): void;
-	public getSize(): [number, number];
+	public getSize(): LuaTuple<[number, number]>;
 	public clear(): void;
 	public clearLine(): void;
 	public getTextColour(): number;
@@ -439,8 +439,8 @@ declare class Term {
 	public setPaletteColour(index: number, r: number, g: number, b: number): void;
 	public setPaletteColor(index: number, colour: number): void;
 	public setPaletteColor(index: number, r: number, g: number, b: number): void;
-	public getPaletteColour(colour: number): [number, number, number];
-	public getPaletteColor(colour: number): [number, number, number];
+	public getPaletteColour(colour: number): LuaTuple<[number, number, number]>;
+	public getPaletteColor(colour: number): LuaTuple<[number, number, number]>;
 	public redirect(target: object): object;
 	public current(): object;
 	public native(): object;
@@ -471,22 +471,22 @@ declare class TextUtils {
 export const textutils: TextUtils;
 
 declare class Turtle {
-	public craft(limit?: number): [boolean, string];
-	public forward(): [boolean, string | undefined];
-	public back(): [boolean, string | undefined];
-	public up(): [boolean, string | undefined];
-	public down(): [boolean, string | undefined];
-	public turnLeft(): [boolean, string | undefined];
-	public turnRight(): [boolean, string | undefined];
-	public dig(side?: string): [boolean, string | undefined];
-	public digUp(side?: string): [boolean, string | undefined];
-	public digDown(side?: string): [boolean, string | undefined];
-	public place(text?: string): [boolean, string | undefined];
-	public placeUp(text?: string): [boolean, string | undefined];
-	public placeDown(text?: string): [boolean, string | undefined];
-	public drop(count?: number): [boolean, string | undefined];
-	public dropUp(count?: number): [boolean, string | undefined];
-	public dropDown(count?: number): [boolean, string | undefined];
+	public craft(limit?: number): LuaTuple<[boolean, string]>;
+	public forward(): LuaTuple<[boolean, string | undefined]>;
+	public back(): LuaTuple<[boolean, string | undefined]>;
+	public up(): LuaTuple<[boolean, string | undefined]>;
+	public down(): LuaTuple<[boolean, string | undefined]>;
+	public turnLeft(): LuaTuple<[boolean, string | undefined]>;
+	public turnRight(): LuaTuple<[boolean, string | undefined]>;
+	public dig(side?: string): LuaTuple<[boolean, string | undefined]>;
+	public digUp(side?: string): LuaTuple<[boolean, string | undefined]>;
+	public digDown(side?: string): LuaTuple<[boolean, string | undefined]>;
+	public place(text?: string): LuaTuple<[boolean, string | undefined]>;
+	public placeUp(text?: string): LuaTuple<[boolean, string | undefined]>;
+	public placeDown(text?: string): LuaTuple<[boolean, string | undefined]>;
+	public drop(count?: number): LuaTuple<[boolean, string | undefined]>;
+	public dropUp(count?: number): LuaTuple<[boolean, string | undefined]>;
+	public dropDown(count?: number): LuaTuple<[boolean, string | undefined]>;
 	public select(slot: number): boolean;
 	public getItemCount(slot?: number): number;
 	public getItemSpace(slot?: number): number;
@@ -496,23 +496,23 @@ declare class Turtle {
 	public compare(): boolean;
 	public compareUp(): boolean;
 	public compareDown(): boolean;
-	public attack(side?: string): [boolean, string | undefined];
-	public attackUp(side?: string): [boolean, string | undefined];
-	public attackDown(side?: string): [boolean, string | undefined];
-	public suck(count?: number): [boolean, string | undefined];
-	public suckUp(count?: number): [boolean, string | undefined];
-	public suckDown(count?: number): [boolean, string | undefined];
+	public attack(side?: string): LuaTuple<[boolean, string | undefined]>;
+	public attackUp(side?: string): LuaTuple<[boolean, string | undefined]>;
+	public attackDown(side?: string): LuaTuple<[boolean, string | undefined]>;
+	public suck(count?: number): LuaTuple<[boolean, string | undefined]>;
+	public suckUp(count?: number): LuaTuple<[boolean, string | undefined]>;
+	public suckDown(count?: number): LuaTuple<[boolean, string | undefined]>;
 	public getFuelLevel(): number | "unlimited";
-	public refuel(count?: number): [boolean, string | undefined];
+	public refuel(count?: number): LuaTuple<[boolean, string | undefined]>;
 	public compareTo(slot: number): boolean;
 	public transferTo(slot: number, count?: number): boolean;
 	public getSelectedSlot(): number;
 	public getFuelLimit(): number | "umlimited";
-	public equipLeft(): [boolean, string | undefined];
-	public equipRight(): [boolean, string | undefined];
-	public inspect(): [boolean, object | string];
-	public inspectUp(): [boolean, object | string];
-	public inspectDown(): [boolean, object | string];
+	public equipLeft(): LuaTuple<[boolean, string | undefined]>;
+	public equipRight(): LuaTuple<[boolean, string | undefined]>;
+	public inspect(): LuaTuple<[boolean, object | string]>;
+	public inspectUp(): LuaTuple<[boolean, object | string]>;
+	public inspectDown(): LuaTuple<[boolean, object | string]>;
 	public getItemDetail(slot?: number, detailed?: boolean): object | undefined;
 }
 
@@ -535,15 +535,15 @@ declare class vector {
 }
 
 declare class Window {
-	public nativePaletteColour(colour: number): [number, number, number];
-	public nativePaletteColor(colour: number): [number, number, number];
+	public nativePaletteColour(colour: number): LuaTuple<[number, number, number]>;
+	public nativePaletteColor(colour: number): LuaTuple<[number, number, number]>;
 	public write(text: string): void;
 	public scroll(y: number): void;
-	public getCursorPos(): [number, number];
+	public getCursorPos(): LuaTuple<[number, number]>;
 	public setCursorPos(x: number, y: number): void;
 	public getCursorBlink(): boolean;
 	public setCursorBlink(blink: boolean): void;
-	public getSize(): [number, number];
+	public getSize(): LuaTuple<[number, number]>;
 	public clear(): void;
 	public clearLine(): void;
 	public getTextColour(): number;
@@ -561,8 +561,8 @@ declare class Window {
 	public setPaletteColour(index: number, r: number, g: number, b: number): void;
 	public setPaletteColor(index: number, colour: number): void;
 	public setPaletteColor(index: number, r: number, g: number, b: number): void;
-	public getPaletteColour(colour: number): [number, number, number];
-	public getPaletteColor(colour: number): [number, number, number];
+	public getPaletteColour(colour: number): LuaTuple<[number, number, number]>;
+	public getPaletteColor(colour: number): LuaTuple<[number, number, number]>;
 	public redirect(target: object): object;
 	public current(): object;
 	public native(): object;
