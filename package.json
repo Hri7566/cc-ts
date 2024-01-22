@@ -20,7 +20,7 @@
 		"access": "public"
 	},
 	"devDependencies": {
-		"@rbxts/compiler-types": "2.1.0-types.1",
+		"@rbxts/compiler-types": "2.2.0-types.0",
 		"@rbxts/types": "^1.0.744",
 		"luabundle": "^1.6.0",
 		"prettier": "^2.8.8",

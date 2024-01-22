@@ -11,8 +11,8 @@ dependencies:
 
 devDependencies:
   '@rbxts/compiler-types':
-    specifier: 2.1.0-types.1
-    version: 2.1.0-types.1
+    specifier: 2.2.0-types.0
+    version: 2.2.0-types.0
   '@rbxts/types':
     specifier: ^1.0.744
     version: 1.0.744
@@ -28,8 +28,8 @@ devDependencies:
 
 packages:
 
-  /@rbxts/compiler-types@2.1.0-types.1:
-    resolution: {integrity: sha512-+ztwutzuNivWsgsERiC7n5il4C5gfJUuGJUmXYRq8FwY4ye3aupRi9RocmyAHq6255sO7z+RM61AVbqx3llsLQ==}
+  /@rbxts/compiler-types@2.2.0-types.0:
+    resolution: {integrity: sha512-ycsIGfp49MypbRi4eEPCXTjbb2iLKL1/2GjRrFLuLJL74fCfVtbAXIo2LiZhPrgqIiBLomb4JN5Rcqv4304bzw==}
     dev: true
 
   /@rbxts/types@1.0.744:
