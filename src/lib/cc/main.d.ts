@@ -91,6 +91,21 @@ declare class Disk {
 
 export const disk: Disk;
 
+// NOTE may not have all the correct types and all, i was lazily adding this -- Khorne
+declare class DiskDrive {
+	public isDiskPresent(): boolean;
+	public getDiskLabel(): string;
+	public setDiskLabel(name: string, label: string): string | undefined;
+	public hasData(): boolean;
+	public getMountPath(): string;
+	public hasAudio(): boolean;
+	public getAudioTitle(): string | false | undefined;
+	public playAudio(): string | false | undefined;
+	public stopAudio(): void;
+	public ejectDisk(): void;
+	public getDiskID(): string | undefined;
+}
+
 export interface ReadHandle {
 	read(count?: number): string | number | undefined;
 	readAll(): string | undefined;
@@ -145,6 +160,7 @@ declare class Fs {
 		created: number;
 		modified: number;
 	};
+	public copy(path: string, dest: string): void;
 }
 
 export const fs: Fs;
@@ -442,8 +458,8 @@ declare class Term {
 	public getPaletteColour(colour: number): LuaTuple<[number, number, number]>;
 	public getPaletteColor(colour: number): LuaTuple<[number, number, number]>;
 	public redirect(target: object): object;
-	public current(): object;
-	public native(): object;
+	public current(): Term;
+	public native(): Term;
 }
 
 export const term: Term;
