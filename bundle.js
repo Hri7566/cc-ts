@@ -4,7 +4,7 @@ const bundleDir = "dist";
 const { bundle } = require("luabundle");
 const { writeFileSync, mkdirSync } = require("fs");
 const package = require("./package.json");
-const path = require("path");
+const path = require("path/posix");
 
 // TS.import(script, script.Parent, "lib", "cc", "main")
 // require("lib.cc.main")
