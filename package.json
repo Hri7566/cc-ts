@@ -21,12 +21,12 @@
 	},
 	"devDependencies": {
 		"@rbxts/compiler-types": "2.2.0-types.0",
-		"@rbxts/types": "^1.0.744",
-		"luabundle": "^1.6.0",
+		"@rbxts/types": "^1.0.804",
+		"luabundle": "^1.7.0",
 		"prettier": "^2.8.8",
-		"typescript": "^5.3.3"
+		"typescript": "^5.5.4"
 	},
 	"dependencies": {
-		"roblox-ts": "^2.2.0"
+		"roblox-ts": "^2.3.0"
 	}
 }
