@@ -270,6 +270,24 @@ declare interface Keys {
 
 export const keys: Keys;
 
+// Should work fine, I used undefined in replace of nil, as well, TS doesn't have nil to my knowledge -- Khorne
+declare class Modem {
+	public open(channel: number): void;
+	public isOpen(channel: number): boolean;
+	public close(channel: number): void;
+	public closeAll(): void;
+	public transmit(channel: number, replyChannel: number, payload: unknown): void;
+	public isWireless(): boolean;
+	public getNamesRemote(): string[];
+	public isPresentRemote(name: string): boolean;
+	public getTypeRemote(name: string): string[] | string | undefined;
+	public hasTypeRemote(name: string, type: string): boolean | undefined;
+	public getMethodsRemote(name: string): string[] | undefined;
+	public callRemote(remoteName: string, method: string, ...args: unknown[]): string;
+	public getNameLocal(): string | undefined;
+}
+
+
 declare class Multishell {
 	public getFocus(): number;
 	public setFocus(n: number): boolean;
